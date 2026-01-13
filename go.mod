@@ -3,6 +3,7 @@ module github.com/banking/aml-service
 go 1.22
 
 require (
+	github.com/banking/shared v1.0.0
 	github.com/IBM/sarama v1.43.0
 	github.com/golang-jwt/jwt/v5 v5.3.0
 	github.com/google/uuid v1.6.0
@@ -19,6 +20,9 @@ require (
 	go.uber.org/zap v1.27.0
 	golang.org/x/sync v0.6.0
 )
+
+// For local development - remove when publishing shared library
+replace github.com/banking/shared => ../banking-shared-go
 
 require (
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
