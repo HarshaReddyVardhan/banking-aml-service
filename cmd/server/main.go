@@ -7,7 +7,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 
 	"github.com/banking/aml-service/internal/config"
 	"github.com/labstack/echo/v4"
@@ -49,7 +48,7 @@ func main() {
 
 	// 6. Start Server (Graceful Shutdown)
 	serverAddr := fmt.Sprintf(":%d", cfg.Server.Port)
-	
+
 	go func() {
 		if err := e.Start(serverAddr); err != nil && err != http.ErrServerClosed {
 			sugar.Fatalf("shutting down the server: %v", err)
@@ -62,15 +61,15 @@ func main() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	
+
 	sugar.Info("Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.Server.ShutdownTimeout)
 	defer cancel()
-	
+
 	if err := e.Shutdown(ctx); err != nil {
 		sugar.Fatal(err)
 	}
-	
+
 	sugar.Info("Server exited properly")
 }
